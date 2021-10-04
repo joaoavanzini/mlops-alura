@@ -1,19 +1,10 @@
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from flask import Flask, request, json, jsonify
 from textblob import TextBlob
-import pandas as pd
+import pickle
 
-df = pd.read_csv('casas.csv')
-colunas = ['tamanho','ano','garagem']
-# df = df[colunas]
-
-x = df.drop('preco', axis=1)
-y = df['preco']
-
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
-modelo = LinearRegression()
-modelo.fit(X_train, y_train)
+colunas = ['tamanho', 'ano', 'garagem']
+modelo = pickle.load(open('modelo.sav','rb'))
 
 app = Flask(__name__)
 
